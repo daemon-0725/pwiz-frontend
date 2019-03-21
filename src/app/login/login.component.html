@@ -1,0 +1,23 @@
+<mat-card style="max-width: 600px; margin: 0 auto">
+  <mat-card-header>
+    <mat-card-title style="color: indigo; font-size: 1.3em; font-weight: 900; font-family: overpass;">
+      LOGIN
+    </mat-card-title>
+  </mat-card-header>
+  <div style="text-align: center">
+    <mat-form-field style="width: 80%">
+      <input matInput type="text" required placeholder="Enter Email" #email>
+    </mat-form-field>
+    <mat-form-field style="width: 80%">
+      <input matInput type="password" required placeholder="Enter Password" #password>
+    </mat-form-field>
+    <br>
+    <mat-radio-group [(ngModel)]="loginType" style="width: 80%; text-align: start; display: inline-flex; flex-direction: column; padding-bottom: 20px;">
+      <mat-radio-button *ngFor='let user of ["Admin", "Company"]' [value]="user">
+        {{ user }}
+      </mat-radio-button>
+    </mat-radio-group>
+  <br>
+  <button mat-raised-button color=accent (click)="login(email.value, password.value)">Login</button>
+</div>
+</mat-card>
