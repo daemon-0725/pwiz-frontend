@@ -2,3 +2,28 @@
     width: fit-content;
     margin: auto auto;
 }
+
+#hero {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+#overlay {
+    z-index: 1;
+    background-color: rgba(1, 1, 1, 0.5);
+    box-shadow: 0px 0px 14px 14px inset white;
+    padding: 35px;
+    height: 100%;
+}
+
+.hero-header {
+    font-family: 'Overpass', sans-serif;
+    color: white;
+    font-size: 4em;
+    font-weight: 700;
+    font-style: italic;
+    z-index: 2;
+}

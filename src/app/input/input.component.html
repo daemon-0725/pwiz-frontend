@@ -1,43 +1,60 @@
-<mat-card style="max-width: 600px; text-align : center; margin: auto auto">
-<mat-card-header>
-  <mat-card-title style="color:indigo; font-size: 1em; font-weight: 900; font-family: overpass;">
-    PLACEMENT DETAILS
-  </mat-card-title>
-</mat-card-header>
-<mat-form-field style="width: 80%">
-  <mat-select placeholder="Select Field Name" #field>
-  <mat-option *ngFor="let field of fields" [value]="field">
-    {{field}}
-  </mat-option>
-  </mat-select>
-</mat-form-field>
-<br>
-<mat-form-field style="width: 80%">
-  <input matInput type="number" placeholder="Enter CTC in LPA" #ctc >
-</mat-form-field>
-<br>
-<button mat-raised-button color="accent" (click)="submit(ctc.value, field.value); openSnackBar('The entry has been submitted successfully!')">Submit</button>
-</mat-card>
-<br>
-<div style="text-align:center">
-  <button mat-raised-button color='accent' (click)='logout()'>LOGOUT</button>
+<div *ngIf='logged'>
+  <div id="hero" [style.backgroundImage] = 'setImage()'>
+   <div id="overlay">
+      <span class='hero-header'>
+          {{ company_name }}
+      </span>
+      <div style="text-align:center; display: inline-block; vertical-align: text-bottom">
+          <button mat-raised-button color='accent' (click)='logout()'>LOGOUT</button>
+      </div>
+   </div>
+  </div>
+
+  <mat-progress-bar
+  *ngIf='loading' color='accent' mode='indeterminate'>
+  </mat-progress-bar>
+
+  <mat-tab-group dynamicHeight mat-align-tabs="center">
+    <mat-tab label='PLACEMENT DETAILS'>
+      <mat-card style="max-width: 600px; text-align : center; margin: 18px auto">
+        <mat-card-header>
+          <mat-card-title style="color:indigo; font-size: 1em; font-weight: 900; font-family: overpass;">
+            <i class="material-icons">details</i> PLACEMENT DETAILS
+          </mat-card-title>
+        </mat-card-header>
+        <mat-form-field style="width: 80%">
+          <mat-select placeholder="Select Field Name" #field>
+          <mat-option *ngFor="let field of fields" [value]="field">
+            {{field}}
+          </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br>
+        <mat-form-field style="width: 80%">
+          <input matInput type="number" placeholder="Enter CTC in LPA" #ctc >
+        </mat-form-field>
+        <br>
+        <button mat-raised-button color="accent" (click)="submit(ctc.value, field.value);">Submit</button>
+      </mat-card>
+    </mat-tab>
+    <mat-tab label='Entered Posts'>
+      <mat-list>
+        <mat-list-item *ngFor='let jobs of arr'>
+          <h2 matLine> <i class="material-icons">work</i>  {{ jobs.field }} </h2>
+          <p matLine>
+            <span>
+              <b>CTC</b> : {{jobs.ctc}} LPA
+            </span>
+            <button mat-button color='primary' (click)='removePost(jobs.field, jobs.ctc)'>REMOVE</button>
+          </p>
+          <mat-divider></mat-divider>
+        </mat-list-item>
+      </mat-list>
+    </mat-tab>
+  </mat-tab-group>
 </div>
 
-  <h2 style="font-weight: 900; font-family: overpass;">Entered Posts</h2>
-  <ol style="list-style-type: none;">
-    <li *ngFor="let jobs of arr">
-      <mat-card style="max-width: 400px;">
-        <mat-card-title>
-          <!--<span style="color: indigo; font-weight: 2.5em;"> {{ jobs.field }}</span>-->
-          {{ jobs.field }}
-        </mat-card-title>
-        <mat-card-content>
-          <span> <b>CTC</b> : {{ jobs.ctc }} LPA </span>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button color="primary" (click)='removePost(jobs.field, jobs.ctc)'>REMOVE</button>
-        </mat-card-actions>
-      </mat-card>
-      <br>
-    </li>
-  </ol>
+<div *ngIf = '!logged'>
+  User is not logged in.<br>
+  If slow traffic, wait; else go to <a routerLink='/login' routerLinkActive='active'>LOGIN PAGE</a>
+</div>

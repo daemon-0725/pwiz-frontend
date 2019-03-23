@@ -1,58 +1,73 @@
+<div class="header overpass-font">
+  <span>Placement Wizard</span>
+    <div style="text-align:center; display: inline-block; vertical-align: text-bottom">
+      <button *ngIf='logged' mat-raised-button color='accent' (click)='logout()'>LOGOUT</button>
+    </div>
+</div>
+<mat-progress-bar
+  *ngIf="loading" color="accent" mode="indeterminate">
+</mat-progress-bar>
 <div *ngIf='logged'>
-  <div>
-    <mat-card style="max-width: 600px; margin: 0 auto; text-align: center">
-      <mat-card-header>
-        <mat-card-title style="color:indigo; font-size: 1.3em; font-weight: 900; font-family: overpass;">
-          ADD RECRUITER
-        </mat-card-title>
-      </mat-card-header>
-      <mat-form-field style="width:80%">
-        <input id="company" matInput type="text" required placeholder="Enter Company Name" #company>
-      </mat-form-field>
-      <br>
-      <mat-form-field style="width:80%">
-        <textarea id="desc" matInput 
-        matTextareaAutosize='true'
-        matAutosizeMaxRows='5'
-        matAutosizeMinRows='2' 
-        placeholder="Enter Company Description" #desc></textarea>
-      </mat-form-field>
-      <br>
-      <mat-form-field style="width:80%">
-        <input id='email' matInput type="text" required placeholder="Enter Email" #email>
-      </mat-form-field>
-      <br>
-      <mat-form-field style="width:80%">
-        <input id="password" matInput type="password" required placeholder="Enter Password" #password>
-      </mat-form-field>
-      <br>
-      <button mat-raised-button color=accent (click)="addCompany(company.value, email.value, password.value, desc.value);">ADD</button>
-    </mat-card>
-  </div>
-  <br>
-  <div style="text-align:center">
-    <button mat-raised-button color=primary (click)='logout()'>LOGOUT</button>
-  </div>
-  <h2 style="color:blue; font-size:2em; font-weight: 900; font-family: overpass;">LIST OF RECRUITERS</h2>
-  <ol style="list-style-type: none;">
-    <li *ngFor='let c of companys | async'>
-      <mat-card style="max-width: 600px">
-        <mat-card-header>
-          <mat-card-title style="color:rgb(247, 63, 93); font-weight: bolder; font-size: 1.5em">
-            {{c.key}}
-          </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <span style="color: indigo; font-weight: bold; font-size: 1.2em">Description:</span>
-          <br> {{c.payload.val()}}
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button (click)="removeFields(c.name)">REMOVE POSTINGS</button>
-        </mat-card-actions>
-      </mat-card>
-      <br>
-    </li>
-  </ol>
+  <mat-tab-group  mat-align-tabs="center">
+    <mat-tab label='ADD RECRUITER'>
+      <div>
+        <mat-card style="max-width: 600px; margin: 20px auto; text-align: center">
+          <mat-card-header>
+            <mat-card-title style="color:indigo; font-size: 1.3em; font-weight: 900; font-family: overpass;">
+              ADD RECRUITER
+            </mat-card-title>
+          </mat-card-header>
+          <mat-form-field style="width:80%">
+            <input id="company" matInput type="text" required placeholder="Enter Name" #company>
+            <mat-hint>Abbrevation Preferred</mat-hint>
+          </mat-form-field>
+          <br>
+          <mat-form-field style="width:80%">
+            <textarea id="desc" matInput 
+            matTextareaAutosize='true'
+            matAutosizeMaxRows='5'
+            matAutosizeMinRows='2' 
+            placeholder="Enter Company Description" #desc></textarea>
+          </mat-form-field>
+          <br>
+          <mat-form-field style="width:80%">
+            <input id='imgurl' matInput type="text" required placeholder="Enter Display Image URL" #imgurl>
+          </mat-form-field>
+          <br>
+          <mat-form-field style="width:80%">
+            <input id='email' matInput type="text" required placeholder="Enter Email" #email>
+          </mat-form-field>
+          <br>
+          <mat-form-field style="width:80%">
+            <input id="password" matInput type="password" required placeholder="Enter Password" #password>
+          </mat-form-field>
+          <br>
+          <button mat-raised-button color=accent (click)="addCompany(company.value, email.value, password.value, desc.value, imgurl.value);">ADD</button>
+        </mat-card>
+      </div>
+    </mat-tab>
+  <mat-tab label='LIST OF RECRUITERS'>
+    <ol style="list-style-type: none;">
+      <li *ngFor='let c of companys | async'>
+        <mat-card style="max-width: 600px">
+          <mat-card-header>
+            <mat-card-title style="color:rgb(247, 63, 93); font-weight: bolder; font-size: 1.5em">
+              {{c.key}}
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <span style="color: indigo; font-weight: bold; font-size: 1.2em">Description:</span>
+            <br> {{c.payload.val().desc}}
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button (click)="removeFields(c.key)">REMOVE POSTINGS</button>
+          </mat-card-actions>
+        </mat-card>
+        <br>
+      </li>
+    </ol>
+  </mat-tab>
+  </mat-tab-group>
 </div>
 <div *ngIf='!logged'>
   ADMIN is not logged.<br>

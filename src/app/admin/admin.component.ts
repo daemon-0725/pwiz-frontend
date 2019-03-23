@@ -12,19 +12,22 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class AdminComponent implements OnInit, OnDestroy {
 
+  afAuth : AngularFireAuth = null;
   constructor(private db: AngularFireDatabase, 
               private router: Router,
               private snackBar : MatSnackBar,
-              public afAuth : AngularFireAuth) { }
+              afAuth : AngularFireAuth) {
+                this.afAuth = afAuth;
+              }
 
 fields = ['Front End','Back End','Full Stack','Cloud', 'Data Science', 'Database', 'Machine Learning', 'Security','Marketing','Mobile']
 companys : Observable<any[]>;
 logged : boolean = false;
+loading = false;
 public ref = null; 
 
   ngOnInit() {
     this.db.list('/Admin').valueChanges().subscribe(item => {
-      //console.log(item[1]);
       if (item[1] == true) {
         this.logged = true;
       }
@@ -33,15 +36,13 @@ public ref = null;
       }
     })
     this.companys = this.db.list("/Companies").snapshotChanges();
-
   }
 
   ngOnDestroy() {
-    //if (this.ref != null)
-    //this.ref.unsubscribe();
+    this.db.list('/').update('Admin',{'logged':false})
   }
 
-  addCompany (company: string, email: string, password: string, desc:string) {
+  addCompany (company: string, email: string, password: string, desc:string, imgurl : string) {
     this.afAuth.auth.createUserWithEmailAndPassword(email,password).then(code => {
       //console.log(code.user.displayName)
       if (code != null) {
@@ -49,7 +50,8 @@ public ref = null;
           displayName: company,
           photoURL:  null
         })
-        this.db.list('/Companies').set(company,desc)
+        this.db.list('/Companies/'+company).set('desc',desc);
+        this.db.list('/Companies/'+company).set('url',imgurl);
         this.openSnackBar('Recruiter added successfully');
         this.afAuth.auth.signOut();
       }
@@ -74,6 +76,7 @@ public ref = null;
   }*/
 
   logout () {
+    this.loading = true;
     this.db.list('/').update('Admin',{'logged':false}).then(bye => {
     this.router.navigateByUrl('/login');
     })

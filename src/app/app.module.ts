@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Injector } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module'
 
@@ -12,13 +12,15 @@ import {MatButtonModule} from '@angular/material/button'
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatListModule} from '@angular/material/list';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatProgressBarModule } from "@angular/material/progress-bar";
 
 import { AppComponent } from './app.component';
 import { InputComponent } from './input/input.component';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabase, AngularFireDatabaseModule} from '@angular/fire/database'
-import { AngularFireAuthModule, AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 import { environment } from '../environments/environment';
 
@@ -49,12 +51,13 @@ import { AngFireService } from './ang-fire.service';
     MatSnackBarModule,
     AppRoutingModule,
     AngularFireDatabaseModule,
-    AngularFireAuthModule,
     MatRadioModule,
-    MatListModule
+    MatListModule,
+    MatTabsModule,
+    MatProgressBarModule
   ],
   providers: [AngularFireDatabase,
-              AngFireService],
+              AngFireService,AngularFireAuth],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

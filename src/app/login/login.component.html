@@ -1,4 +1,10 @@
-<mat-card style="max-width: 600px; margin: 0 auto">
+<div class="header hero overpass-font">
+  Placement Wizard
+</div>
+<mat-progress-bar
+  *ngIf="loading" color="accent" mode="indeterminate">
+</mat-progress-bar>
+<mat-card style="max-width: 600px; margin: 20px auto">
   <mat-card-header>
     <mat-card-title style="color: indigo; font-size: 1.3em; font-weight: 900; font-family: overpass;">
       LOGIN

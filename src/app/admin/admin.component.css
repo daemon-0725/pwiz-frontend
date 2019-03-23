@@ -1,0 +1,12 @@
+.header {
+    background-color: #1472ee;
+    color: #fff;
+    padding: 20px 10px;
+    border-radius: 3px;
+    font-size: 2.5em
+}
+
+.overpass-font {
+    font-weight: 900;
+    font-family: overpass;
+}
